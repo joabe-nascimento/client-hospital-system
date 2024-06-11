@@ -23,7 +23,7 @@ const RastreamentoPacientes = () => {
   useEffect(() => {
     const fetchTrackings = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/trackings");
+        const response = await axios.get("https://backend-hospital-system.onrender.com/api/trackings");
         setTrackings(response.data);
       } catch (error) {
         console.error("Erro ao buscar trackings:", error);
@@ -40,7 +40,7 @@ const RastreamentoPacientes = () => {
       };
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/trackings",
+          "https://backend-hospital-system.onrender.com/api/trackings",
           newTracking
         );
         setTrackings([...trackings, response.data]);
@@ -54,7 +54,7 @@ const RastreamentoPacientes = () => {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.patch(`http://localhost:3001/api/trackings/${id}`, {
+      await axios.patch(`https://backend-hospital-system.onrender.com/api/trackings/${id}`, {
         status: newStatus,
       });
       setTrackings(

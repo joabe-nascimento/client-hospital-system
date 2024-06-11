@@ -23,7 +23,7 @@ const RegistroIncidentes = () => {
   useEffect(() => {
     const fetchIncidents = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/incidents");
+        const response = await axios.get("https://backend-hospital-system.onrender.com/api/incidents");
         setIncidents(response.data);
       } catch (error) {
         console.error("Erro ao buscar incidentes:", error);
@@ -36,7 +36,7 @@ const RegistroIncidentes = () => {
     if (newIncident.trim() !== "" && registeredBy.trim() !== "") {
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/incidents",
+          "https://backend-hospital-system.onrender.com/api/incidents",
           {
             description: newIncident,
             registeredBy,
@@ -53,7 +53,7 @@ const RegistroIncidentes = () => {
 
   const handleRemoveIncident = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/incidents/${id}`);
+      await axios.delete(`https://backend-hospital-system.onrender.com/api/incidents/${id}`);
       setIncidents(incidents.filter((incident) => incident._id !== id));
     } catch (error) {
       console.error("Erro ao remover incidente:", error);

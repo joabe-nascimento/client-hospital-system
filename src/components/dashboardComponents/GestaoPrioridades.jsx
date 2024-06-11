@@ -24,7 +24,7 @@ const GestaoPrioridades = () => {
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/patients");
+      const response = await axios.get("https://backend-hospital-system.onrender.com/api/patients");
       const patientsData = response.data;
       if (Array.isArray(patientsData)) {
         setPatients(patientsData);
@@ -38,7 +38,7 @@ const GestaoPrioridades = () => {
 
   const handleChangePriority = async (id, newPriority) => {
     try {
-      await axios.patch(`http://localhost:3001/api/patients/${id}`, {
+      await axios.patch(`https://backend-hospital-system.onrender.com/api/patients/${id}`, {
         priority: newPriority,
       });
       fetchPatients();
@@ -54,7 +54,7 @@ const GestaoPrioridades = () => {
         priority: newPatientPriority,
       };
       try {
-        await axios.post("http://localhost:3001/api/patients", newPatient);
+        await axios.post("https://backend-hospital-system.onrender.com/api/patients", newPatient);
         setNewPatientName("");
         setNewPatientPriority("Baixa");
         fetchPatients();
@@ -66,7 +66,7 @@ const GestaoPrioridades = () => {
 
   const removePatient = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/patients/${id}`);
+      await axios.delete(`https://backend-hospital-system.onrender.com/api/patients/${id}`);
       fetchPatients();
     } catch (error) {
       console.error("Erro ao remover paciente:", error);
