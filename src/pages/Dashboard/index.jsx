@@ -84,7 +84,13 @@ const Dashboard = () => {
   };
 
   return (
-    <HStack spacing={0} align="flex-start" w="100%" h="100vh">
+    <HStack
+      spacing={0}
+      mt={{ base: "50px", md: "0px" }}
+      align="flex-start"
+      w="100%"
+      h="100vh"
+    >
       {isMobile ? (
         <>
           <IconButton

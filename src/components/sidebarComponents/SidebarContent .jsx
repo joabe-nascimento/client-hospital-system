@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, VStack, Button, Image } from "@chakra-ui/react";
+import { Box, VStack, Button, Image, Center } from "@chakra-ui/react";
 import {
   MdDirectionsBus,
   MdTrackChanges,
@@ -20,7 +20,14 @@ const SidebarContent = ({
   return (
     <Box p={4}>
       <VStack spacing={4} align="stretch">
-        <Image size="25%" src={logoclinica} mb={4} />
+        <Center>
+          <Image
+            src={logoclinica}
+            boxSize="150px" // Adjust the size here
+            objectFit="contain" // Ensures the image fits within the specified box size
+            mb={4}
+          />
+        </Center>
         <Button
           size={buttonSize}
           onClick={handleScheduleTransport}

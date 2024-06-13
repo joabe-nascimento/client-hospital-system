@@ -29,13 +29,16 @@ const Signin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("https://backend-hospital-system.onrender.com/api/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://backend-hospital-system.onrender.com/api/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 

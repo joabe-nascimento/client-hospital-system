@@ -26,9 +26,11 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async (event) => {
     event.preventDefault();
+    setIsLoading(true); // Desabilitar o botão
 
     if (password !== confirmPassword) {
       toast({
@@ -38,6 +40,7 @@ const Signup = () => {
         duration: 5000,
         isClosable: true,
       });
+      setIsLoading(false); // Habilitar o botão novamente
       return;
     }
 
@@ -82,6 +85,8 @@ const Signup = () => {
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setIsLoading(false); // Habilitar o botão novamente
     }
   };
 
@@ -166,6 +171,7 @@ const Signup = () => {
               size="lg"
               fontSize="md"
               leftIcon={<MdPersonAdd />}
+              isLoading={isLoading} // Exibir spinner enquanto a requisição está em andamento
             >
               Cadastrar
             </Button>
