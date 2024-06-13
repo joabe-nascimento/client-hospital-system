@@ -96,8 +96,8 @@ const AgendamentoTransporte = () => {
         Agendamento de Transporte de Pacientes
       </Heading>
 
-      <Grid templateColumns="repeat(2, 1fr)" gap={6} mb={6}>
-        <GridItem colSpan={1}>
+      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6} mb={6}>
+        <GridItem>
           <Box p={4} bg="teal.50" borderRadius="md" boxShadow="md">
             <VStack spacing={4} align="stretch">
               <HStack spacing={2} w="full">
@@ -124,12 +124,12 @@ const AgendamentoTransporte = () => {
           </Box>
         </GridItem>
 
-        <GridItem colSpan={1}>
+        <GridItem>
           <Box p={4} bg="teal.50" borderRadius="md" boxShadow="md">
             <Heading as="h3" size="md" mb={4} color="teal.700">
               Estatísticas de Solicitações
             </Heading>
-            <SimpleGrid columns={3} spacing={4}>
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
               <Box>
                 <Pie data={{
                   labels: ['Aceita', 'Recusada', 'Pendente'],
@@ -178,78 +178,74 @@ const AgendamentoTransporte = () => {
         </GridItem>
       </Grid>
 
-      <Grid templateColumns="repeat(1, 1fr)" gap={6}>
-        <GridItem colSpan={1}>
-          <Box p={4} bg="gray.50" borderRadius="md" boxShadow="md">
-            <Heading as="h3" size="md" mb={4} color="gray.700">
-              Solicitações de Transporte de Pacientes
-            </Heading>
-            <List spacing={3}>
-              {filteredRequests.map((req) => (
-                <MotionListItem
-                  key={req._id}
-                  p={4}
-                  borderWidth={1}
-                  borderRadius="md"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  bg={req.status === "Pendente" ? "gray.100" : "white"}
-                >
-                  <HStack justifyContent="space-between">
-                    <Box>
-                      <Text fontWeight="bold">
-                        Paciente: {req.patient}{" "}
-                        <Badge
-                          ml={2}
-                          colorScheme={
-                            req.status === "Aceita"
-                              ? "green"
-                              : req.status === "Recusada"
-                              ? "red"
-                              : "gray"
-                          }
-                        >
-                          {req.status}
-                        </Badge>
-                      </Text>
-                      <HStack mt={2}>
-                        {req.status === "Aceita" && (
-                          <Icon as={CheckIcon} color="green.500" />
-                        )}
-                        {req.status === "Recusada" && (
-                          <Icon as={CloseIcon} color="red.500" />
-                        )}
-                        {req.status === "Pendente" && (
-                          <Icon as={TimeIcon} color="gray.500" />
-                        )}
-                      </HStack>
-                    </Box>
+      <Box p={4} bg="gray.50" borderRadius="md" boxShadow="md">
+        <Heading as="h3" size="md" mb={4} color="gray.700">
+          Solicitações de Transporte de Pacientes
+        </Heading>
+        <List spacing={3}>
+          {filteredRequests.map((req) => (
+            <MotionListItem
+              key={req._id}
+              p={4}
+              borderWidth={1}
+              borderRadius="md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              bg={req.status === "Pendente" ? "gray.100" : "white"}
+            >
+              <HStack justifyContent="space-between">
+                <Box>
+                  <Text fontWeight="bold">
+                    Paciente: {req.patient}{" "}
+                    <Badge
+                      ml={2}
+                      colorScheme={
+                        req.status === "Aceita"
+                          ? "green"
+                          : req.status === "Recusada"
+                          ? "red"
+                          : "gray"
+                      }
+                    >
+                      {req.status}
+                    </Badge>
+                  </Text>
+                  <HStack mt={2}>
+                    {req.status === "Aceita" && (
+                      <Icon as={CheckIcon} color="green.500" />
+                    )}
+                    {req.status === "Recusada" && (
+                      <Icon as={CloseIcon} color="red.500" />
+                    )}
                     {req.status === "Pendente" && (
-                      <HStack>
-                        <Button
-                          onClick={() => handleAccept(req._id)}
-                          colorScheme="green"
-                          leftIcon={<CheckIcon />}
-                        >
-                          Aceitar
-                        </Button>
-                        <Button
-                          onClick={() => handleReject(req._id)}
-                          colorScheme="red"
-                          leftIcon={<CloseIcon />}
-                        >
-                          Recusar
-                        </Button>
-                      </HStack>
+                      <Icon as={TimeIcon} color="gray.500" />
                     )}
                   </HStack>
-                </MotionListItem>
-              ))}
-            </List>
-          </Box>
-        </GridItem>
-      </Grid>
+                </Box>
+                {req.status === "Pendente" && (
+                  <HStack>
+                    <Button
+                      onClick={() => handleAccept(req._id)}
+                      colorScheme="green"
+                      leftIcon={<CheckIcon />}
+                    >
+                      Aceitar
+                    </Button>
+                    <Button
+                      onClick={() => handleReject(req._id)}
+                      colorScheme="red"
+                      leftIcon={<CloseIcon />}
+                    >
+                      Recusar
+                    </Button>
+                  </HStack>
+                )}
+              </HStack>
+            </MotionListItem>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };
