@@ -20,6 +20,9 @@ import { motion } from "framer-motion";
 import { CheckIcon, CloseIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend);
 
 const MotionListItem = motion(ListItem);
 
