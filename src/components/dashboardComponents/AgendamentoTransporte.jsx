@@ -16,6 +16,7 @@ import {
 import { motion } from "framer-motion";
 import { CheckIcon, CloseIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
+import moment from "moment";
 
 const MotionListItem = motion(ListItem);
 
@@ -30,7 +31,9 @@ const AgendamentoTransporte = () => {
 
   const fetchRequests = async () => {
     try {
-      const response = await axios.get("https://backend-hospital-system.onrender.com/api/requests");
+      const response = await axios.get(
+        "https://backend-hospital-system.onrender.com/api/requests"
+      );
       if (Array.isArray(response.data)) {
         setRequests(response.data);
       } else {
@@ -45,9 +48,12 @@ const AgendamentoTransporte = () => {
 
   const handleAccept = async (id) => {
     try {
-      await axios.patch(`https://backend-hospital-system.onrender.com/api/requests/${id}`, {
-        status: "Aceita",
-      });
+      await axios.patch(
+        `https://backend-hospital-system.onrender.com/api/requests/${id}`,
+        {
+          status: "Aceita",
+        }
+      );
       fetchRequests();
     } catch (error) {
       console.error("Erro ao aceitar solicitação:", error);
@@ -56,9 +62,12 @@ const AgendamentoTransporte = () => {
 
   const handleReject = async (id) => {
     try {
-      await axios.patch(`https://backend-hospital-system.onrender.com/api/requests/${id}`, {
-        status: "Recusada",
-      });
+      await axios.patch(
+        `https://backend-hospital-system.onrender.com/api/requests/${id}`,
+        {
+          status: "Recusada",
+        }
+      );
       fetchRequests();
     } catch (error) {
       console.error("Erro ao recusar solicitação:", error);
@@ -68,9 +77,12 @@ const AgendamentoTransporte = () => {
   const handleAddRequest = async () => {
     if (newPatient.trim() !== "") {
       try {
-        await axios.post("https://backend-hospital-system.onrender.com/api/requests", {
-          patient: newPatient,
-        });
+        await axios.post(
+          "https://backend-hospital-system.onrender.com/api/requests",
+          {
+            patient: newPatient,
+          }
+        );
         setNewPatient("");
         fetchRequests();
       } catch (error) {
@@ -171,6 +183,50 @@ const AgendamentoTransporte = () => {
                   </Button>
                 </HStack>
               )}
+            </HStack>
+          </MotionListItem>
+        ))}
+      </List>
+
+      <Heading as="h3" size="md" mt={8} mb={4} color="GrayText">
+        Histórico de Solicitações
+      </Heading>
+      <List spacing={3}>
+        {requests.map((req) => (
+          <MotionListItem
+            key={req._id}
+            p={4}
+            borderWidth={1}
+            borderRadius="md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            bg="white"
+          >
+            <HStack justifyContent="space-between">
+              <Box>
+                <Text fontWeight="bold">
+                  Paciente: {req.patient}{" "}
+                  <Badge
+                    ml={2}
+                    colorScheme={
+                      req.status === "Aceita"
+                        ? "green"
+                        : req.status === "Recusada"
+                        ? "red"
+                        : req.status === "Pendente"
+                        ? "gray"
+                        : "blue"
+                    }
+                  >
+                    {req.status}
+                  </Badge>
+                </Text>
+                <Text>
+                  <strong>Publicado em:</strong>{" "}
+                  {moment(req.createdAt).format("DD/MM/YYYY HH:mm")}
+                </Text>
+              </Box>
             </HStack>
           </MotionListItem>
         ))}

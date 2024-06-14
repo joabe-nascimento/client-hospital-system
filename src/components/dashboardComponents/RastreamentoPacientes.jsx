@@ -23,7 +23,9 @@ const RastreamentoPacientes = () => {
   useEffect(() => {
     const fetchTrackings = async () => {
       try {
-        const response = await axios.get("https://backend-hospital-system.onrender.com/api/trackings");
+        const response = await axios.get(
+          "https://backend-hospital-system.onrender.com/api/trackings"
+        );
         setTrackings(response.data);
       } catch (error) {
         console.error("Erro ao buscar trackings:", error);
@@ -54,9 +56,12 @@ const RastreamentoPacientes = () => {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.patch(`https://backend-hospital-system.onrender.com/api/trackings/${id}`, {
-        status: newStatus,
-      });
+      await axios.patch(
+        `https://backend-hospital-system.onrender.com/api/trackings/${id}`,
+        {
+          status: newStatus,
+        }
+      );
       setTrackings(
         trackings.map((tracking) =>
           tracking._id === id ? { ...tracking, status: newStatus } : tracking
@@ -110,7 +115,7 @@ const RastreamentoPacientes = () => {
           </motion.div>
         ))}
       </List>
-      <Box mt={6}>
+      {/* <Box mt={6}>
         <Heading as="h3" size="md" mb={4}>
           Adicionar Novo Paciente
         </Heading>
@@ -132,7 +137,7 @@ const RastreamentoPacientes = () => {
         <Button colorScheme="teal" onClick={addTracking}>
           Adicionar Paciente
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

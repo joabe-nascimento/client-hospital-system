@@ -13,6 +13,8 @@ import {
 import { motion } from "framer-motion";
 import axios from "axios";
 
+const MotionListItem = motion(ListItem);
+
 const GestaoPrioridades = () => {
   const [patients, setPatients] = useState([]);
   const [newPatientName, setNewPatientName] = useState("");
@@ -24,12 +26,13 @@ const GestaoPrioridades = () => {
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get("https://backend-hospital-system.onrender.com/api/patients");
-      const patientsData = response.data;
-      if (Array.isArray(patientsData)) {
-        setPatients(patientsData);
+      const response = await axios.get(
+        "https://backend-hospital-system.onrender.com/api/patients"
+      );
+      if (Array.isArray(response.data)) {
+        setPatients(response.data);
       } else {
-        console.error("Os dados recebidos não são um array:", patientsData);
+        console.error("Os dados recebidos não são um array:", response.data);
       }
     } catch (error) {
       console.error("Erro ao buscar pacientes:", error);
@@ -38,9 +41,12 @@ const GestaoPrioridades = () => {
 
   const handleChangePriority = async (id, newPriority) => {
     try {
-      await axios.patch(`https://backend-hospital-system.onrender.com/api/patients/${id}`, {
-        priority: newPriority,
-      });
+      await axios.patch(
+        `https://backend-hospital-system.onrender.com/api/patients/${id}`,
+        {
+          priority: newPriority,
+        }
+      );
       fetchPatients();
     } catch (error) {
       console.error("Erro ao mudar prioridade:", error);
@@ -54,7 +60,10 @@ const GestaoPrioridades = () => {
         priority: newPatientPriority,
       };
       try {
-        await axios.post("https://backend-hospital-system.onrender.com/api/patients", newPatient);
+        await axios.post(
+          "https://backend-hospital-system.onrender.com/api/patients",
+          newPatient
+        );
         setNewPatientName("");
         setNewPatientPriority("Baixa");
         fetchPatients();
@@ -66,7 +75,9 @@ const GestaoPrioridades = () => {
 
   const removePatient = async (id) => {
     try {
-      await axios.delete(`https://backend-hospital-system.onrender.com/api/patients/${id}`);
+      await axios.delete(
+        `https://backend-hospital-system.onrender.com/api/patients/${id}`
+      );
       fetchPatients();
     } catch (error) {
       console.error("Erro ao remover paciente:", error);
@@ -81,42 +92,42 @@ const GestaoPrioridades = () => {
       <List spacing={3}>
         {Array.isArray(patients) && patients.length > 0 ? (
           patients.map((patient) => (
-            <motion.div
+            <MotionListItem
               key={patient._id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <ListItem mb={2}>
-                <HStack justifyContent="space-between">
+              <HStack justifyContent="space-between">
+                <Box>
                   <Text>Paciente: {patient.name}</Text>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    onClick={() => removePatient(patient._id)}
+                  <Select
+                    value={patient.priority}
+                    onChange={(e) =>
+                      handleChangePriority(patient._id, e.target.value)
+                    }
+                    mt={2}
                   >
-                    Remover
-                  </Button>
-                </HStack>
-                <Select
-                  value={patient.priority}
-                  onChange={(e) =>
-                    handleChangePriority(patient._id, e.target.value)
-                  }
-                  mt={2}
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                  </Select>
+                </Box>
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  onClick={() => removePatient(patient._id)}
                 >
-                  <option value="Baixa">Baixa</option>
-                  <option value="Média">Média</option>
-                  <option value="Alta">Alta</option>
-                </Select>
-              </ListItem>
-            </motion.div>
+                  Remover
+                </Button>
+              </HStack>
+            </MotionListItem>
           ))
         ) : (
           <Text>Nenhum paciente encontrado.</Text>
         )}
       </List>
-      <Box mt={6}>
+      {/* <Box mt={6}>
         <Heading as="h3" size="md" mb={4}>
           Adicionar Novo Paciente
         </Heading>
@@ -138,7 +149,7 @@ const GestaoPrioridades = () => {
         <Button colorScheme="teal" onClick={addPatient}>
           Adicionar Paciente
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
