@@ -9,7 +9,6 @@ import {
 import Signin from "./components/Signin/index";
 import Signup from "./components/Signup/index";
 import Dashboard from "./pages/Dashboard/index";
-import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin" element={<AdminDashboard />} />{" "}
+
           {/* Nova rota para o AdminDashboard */}
           <Route path="/" element={<Navigate to="/signin" />} />
           <Route path="*" element={<Navigate to="/signin" />} />
