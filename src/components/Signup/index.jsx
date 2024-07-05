@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -7,70 +7,70 @@ import {
   FormLabel,
   Input,
   Heading,
+  Text,
   Stack,
   useToast,
-  InputGroup,
-  InputLeftElement,
-  Image,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MdPersonAdd, MdEmail, MdLock, MdPerson } from "react-icons/md";
-
-const MotionBox = motion(Box);
+import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import "@fontsource/poppins"; // Import Poppins font
 
 const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignup = async (event) => {
-    event.preventDefault();
-    setIsLoading(true); // Desabilitar o botão
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string().required("Nome é obrigatório"),
+    email: Yup.string().email("Email inválido").required("Email é obrigatório"),
+    password: Yup.string()
+      .min(6, "Senha muito curta - deve ter no mínimo 6 caracteres")
+      .required("Senha é obrigatória"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Senhas devem coincidir")
+      .required("Confirmação de senha é obrigatória"),
+  });
 
-    if (password !== confirmPassword) {
+  const handleSignup = async (values, actions) => {
+    if (values.password !== values.confirmPassword) {
       toast({
-        title: "Password mismatch",
-        description: "Passwords do not match.",
+        title: "Erro na confirmação",
+        description: "As senhas não coincidem.",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
-      setIsLoading(false); // Habilitar o botão novamente
+      actions.setSubmitting(false);
       return;
     }
 
     try {
-      const response = await fetch(
-        "https://backend-hospital-system.onrender.com/api/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
+        // Successful signup
         toast({
-          title: "Signup successful.",
-          description: "You have signed up successfully.",
+          title: "Cadastro bem-sucedido",
+          description: "Você se cadastrou com sucesso.",
           status: "success",
           duration: 5000,
           isClosable: true,
         });
-        navigate("/signin");
+        navigate("/signin"); // Redirect to login page
       } else {
+        // Display error message
         toast({
-          title: "Signup error",
-          description: data.message || "An error occurred during signup.",
+          title: "Erro no cadastro",
+          description: data.message || "Ocorreu um erro durante o cadastro.",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -78,109 +78,138 @@ const Signup = () => {
       }
     } catch (error) {
       console.error(error);
+      // Display generic error message
       toast({
-        title: "Signup error",
-        description: "An error occurred during signup.",
+        title: "Erro no cadastro",
+        description: "Ocorreu um erro durante o cadastro.",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
     } finally {
-      setIsLoading(false); // Habilitar o botão novamente
+      actions.setSubmitting(false);
     }
   };
 
   return (
-    <Flex minHeight="100vh" align="center" justify="center" bg="gray.100">
-      <MotionBox
-        maxW="md"
+    <Flex
+      minHeight="100vh"
+      align="center"
+      justify="center"
+      bgGradient="linear(to-r, teal.400, blue.500)"
+      p={4}
+    >
+      <Box
+        maxW="6xl"
         w="full"
-        bg="white"
-        boxShadow="2xl"
         rounded="lg"
-        p={8}
+        p={6}
         my={12}
-        initial={{ y: -200, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        display="flex"
+        flexDirection={{ base: "column", md: "row" }}
+        alignItems="center"
+        justifyContent="center"
+        bg="white"
+        boxShadow="lg"
       >
-        <Heading as="h2" size="lg" mb={6} textAlign="center">
-          Signup
-        </Heading>
-        <form onSubmit={handleSignup}>
-          <Stack spacing={4}>
-            <FormControl>
-              <FormLabel>Nome</FormLabel>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <MdPerson color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Endereço de Email</FormLabel>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <MdEmail color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Senha</FormLabel>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <MdLock color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </InputGroup>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Confirmar Senha</FormLabel>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <MdLock color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </InputGroup>
-            </FormControl>
-            <Button
-              type="submit"
-              colorScheme="teal"
-              size="lg"
-              fontSize="md"
-              leftIcon={<MdPersonAdd />}
-              isLoading={isLoading} // Exibir spinner enquanto a requisição está em andamento
+        <Box
+          flex="1"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+          mb={{ base: 6, md: 0 }}
+        >
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Heading
+              as="h2"
+              fontSize="8xl"
+              fontFamily="Poppins, sans-serif"
+              textAlign="center"
             >
-              Cadastrar
-            </Button>
-            <Button variant="link" onClick={() => navigate("/signin")}>
-              Já tem uma conta? Faça login
-            </Button>
-          </Stack>
-        </form>
-      </MotionBox>
+              Prosel
+            </Heading>
+          </motion.div>
+        </Box>
+        <Box flex="1" maxW="md" w="full" p={6}>
+          <Heading as="h3" size="lg" mb={6} textAlign="center">
+            Cadastre-se
+          </Heading>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            }}
+            validationSchema={SignupSchema}
+            onSubmit={handleSignup}
+          >
+            {({ errors, touched, isSubmitting }) => (
+              <Form>
+                <Stack spacing={4}>
+                  <FormControl isInvalid={errors.name && touched.name}>
+                    <FormLabel>Nome</FormLabel>
+                    <Field name="name" as={Input} type="text" />
+                    {errors.name && touched.name ? (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.name}
+                      </Text>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors.email && touched.email}>
+                    <FormLabel>Email</FormLabel>
+                    <Field name="email" as={Input} type="email" />
+                    {errors.email && touched.email ? (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.email}
+                      </Text>
+                    ) : null}
+                  </FormControl>
+                  <FormControl isInvalid={errors.password && touched.password}>
+                    <FormLabel>Senha</FormLabel>
+                    <Field name="password" as={Input} type="password" />
+                    {errors.password && touched.password ? (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.password}
+                      </Text>
+                    ) : null}
+                  </FormControl>
+                  <FormControl
+                    isInvalid={
+                      errors.confirmPassword && touched.confirmPassword
+                    }
+                  >
+                    <FormLabel>Confirmar Senha</FormLabel>
+                    <Field name="confirmPassword" as={Input} type="password" />
+                    {errors.confirmPassword && touched.confirmPassword ? (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.confirmPassword}
+                      </Text>
+                    ) : null}
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    colorScheme="teal"
+                    size="lg"
+                    fontSize="md"
+                    isLoading={isSubmitting}
+                  >
+                    Cadastrar
+                  </Button>
+                  <Button variant="link" onClick={() => navigate("/signin")}>
+                    Já tem uma conta? Conecte-se
+                  </Button>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Box>
     </Flex>
   );
 };
