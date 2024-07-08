@@ -150,6 +150,11 @@ const Dashboard = () => {
           <Heading as="h1" size="xl" mb={4} fontWeight="800">
             Hospital Geral Cleriston Andrade
           </Heading>
+          {user && (
+            <Text fontSize="lg" fontWeight="600">
+              Bem-vindo, {user.name}
+            </Text>
+          )}
         </Flex>
         <Divider mb={4} />
         <Heading as="h2" size="lg" mb={4} fontWeight="400" color="GrayText">
