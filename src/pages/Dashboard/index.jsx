@@ -19,7 +19,7 @@ import { MdMenu } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-import SidebarContent from "../../components/sidebarComponents/SidebarContent ";
+import SidebarContent from "../../components/sidebarComponents/SidebarContent";
 import AgendamentoTransporte from "../../components/dashboardComponents/AgendamentoTransporte";
 import RastreamentoPacientes from "../../components/dashboardComponents/RastreamentoPacientes";
 import GestaoPrioridades from "../../components/dashboardComponents/GestaoPrioridades";
@@ -150,6 +150,11 @@ const Dashboard = () => {
           <Heading as="h1" size="xl" mb={4} fontWeight="800">
             Hospital Geral Cleriston Andrade
           </Heading>
+          {user && (
+            <Text fontSize="lg" fontWeight="600">
+              Bem-vindo, {user.name}
+            </Text>
+          )}
         </Flex>
         <Divider mb={4} />
         <Heading as="h2" size="lg" mb={4} fontWeight="400" color="GrayText">
