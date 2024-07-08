@@ -146,9 +146,9 @@ const Dashboard = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Flex justify="space-between" align="center" color="GrayText">
+        <Flex justify="space-between" align="center" color="WhiteText">
           <Heading as="h1" size="xl" mb={4} fontWeight="800">
-            Hospital Cleriston Andrade
+            Hospital Geral Cleriston Andrade
           </Heading>
         </Flex>
         <Divider mb={4} />
