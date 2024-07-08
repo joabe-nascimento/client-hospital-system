@@ -41,15 +41,10 @@ const Dashboard = () => {
   const textSize = useBreakpointValue({ base: "sm", md: "md" });
 
   useEffect(() => {
-    try {
-      const userData = JSON.parse(localStorage.getItem("userData"));
-      if (userData) {
-        setUser(userData);
-      } else {
-        navigate("/signin");
-      }
-    } catch (error) {
-      console.error("Failed to access localStorage:", error);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      setUser(userData);
+    } else {
       navigate("/signin");
     }
   }, [navigate]);
@@ -61,8 +56,8 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("userData");
     toast({
-      title: "Logout bem-sucedido.",
-      description: "Você saiu com sucesso.",
+      title: "Logout successful.",
+      description: "You have logged out successfully.",
       status: "success",
       duration: 5000,
       isClosable: true,
