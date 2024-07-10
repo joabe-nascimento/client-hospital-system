@@ -46,13 +46,16 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("https://backend-hospital-system.onrender.com/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "https://backend-hospital-system.onrender.com/api/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       const data = await response.json();
 
@@ -202,7 +205,7 @@ const Signup = () => {
                     Cadastrar
                   </Button>
                   <Button variant="link" onClick={() => navigate("/signin")}>
-                    Já tem uma conta? Conecte-se
+                    Já tem uma conta ? Conecte-se
                   </Button>
                 </Stack>
               </Form>
