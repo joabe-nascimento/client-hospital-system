@@ -44,7 +44,7 @@ const Signin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Successful login
+        // Login bem-sucedido
         localStorage.setItem("userData", JSON.stringify(data.user));
         toast({
           title: "Login bem-sucedido",
@@ -55,7 +55,7 @@ const Signin = () => {
         });
         navigate("/dashboard");
       } else {
-        // Display error message
+        // Exibir mensagem de erro
         toast({
           title: "Erro no login",
           description: data.message || "Ocorreu um erro ao fazer login.",
@@ -66,7 +66,7 @@ const Signin = () => {
       }
     } catch (error) {
       console.error(error);
-      // Display generic error message
+      // Exibir mensagem de erro genérica
       toast({
         title: "Erro no login",
         description: "Ocorreu um erro ao fazer login.",
@@ -176,3 +176,4 @@ const Signin = () => {
 };
 
 export default Signin;
+  

@@ -36,6 +36,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
+  const headingSize = useBreakpointValue({ base: "md", md: "lg" });
+  const subheadingSize = useBreakpointValue({ base: "sm", md: "md" });
+  const textSize = useBreakpointValue({ base: "sm", md: "md" });
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     if (userData) {
@@ -52,11 +56,12 @@ const Dashboard = () => {
   const handlePrioritizePatients = () =>
     setSelectedComponent("GestaoPrioridades");
   const handleReportIncident = () => setSelectedComponent("RegistroIncidentes");
+
   const handleLogout = () => {
     localStorage.removeItem("userData");
     toast({
-      title: "Logout successful.",
-      description: "You have logged out successfully.",
+      title: "Logout bem-sucedido",
+      description: "Você saiu com sucesso.",
       status: "success",
       duration: 5000,
       isClosable: true,
@@ -76,7 +81,7 @@ const Dashboard = () => {
         return <RegistroIncidentes />;
       default:
         return (
-          <Text fontSize="md">
+          <Text fontSize={textSize}>
             Selecione uma funcionalidade no menu à esquerda.
           </Text>
         );
@@ -147,17 +152,23 @@ const Dashboard = () => {
         transition={{ duration: 0.5 }}
       >
         <Flex justify="space-between" align="center" color="WhiteText">
-          <Heading as="h1" size="xl" mb={4} fontWeight="800">
+          <Heading as="h1" size={headingSize} mb={4} fontWeight="800">
             Hospital Geral Cleriston Andrade
           </Heading>
           {user && (
-            <Text fontSize="lg" fontWeight="600">
+            <Text fontSize={subheadingSize} fontWeight="600">
               Bem-vindo, {user.name}
             </Text>
           )}
         </Flex>
         <Divider mb={4} />
-        <Heading as="h2" size="lg" mb={4} fontWeight="400" color="GrayText">
+        <Heading
+          as="h2"
+          size={subheadingSize}
+          mb={4}
+          fontWeight="400"
+          color="GrayText"
+        >
           Funcionalidades Principais
         </Heading>
         {renderComponent()}
