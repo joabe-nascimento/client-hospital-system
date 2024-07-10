@@ -75,7 +75,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: btnActiveBg, transform: "translateY(0)" }}
-          transition="all 0.2s"
+          transition="all 0.5s"
         >
           Agendamento
         </Button>
