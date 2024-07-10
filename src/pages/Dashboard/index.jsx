@@ -49,12 +49,9 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
-  const handleScheduleTransport = () =>
-    setSelectedComponent("AgendamentoTransporte");
-  const handleTrackPatients = () =>
-    setSelectedComponent("RastreamentoPacientes");
-  const handlePrioritizePatients = () =>
-    setSelectedComponent("GestaoPrioridades");
+  const handleScheduleTransport = () => setSelectedComponent("AgendamentoTransporte");
+  const handleTrackPatients = () => setSelectedComponent("RastreamentoPacientes");
+  const handlePrioritizePatients = () => setSelectedComponent("GestaoPrioridades");
   const handleReportIncident = () => setSelectedComponent("RegistroIncidentes");
 
   const handleLogout = () => {
