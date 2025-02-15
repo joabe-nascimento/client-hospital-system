@@ -32,7 +32,7 @@ class RastreamentoPacientes extends Component {
   fetchTrackings = async () => {
     try {
       const response = await axios.get(
-        "https://backend-hospital-system.onrender.com/api/trackings"
+        " https://backend-hospital-system-61pw.onrender.com/api/trackings"
       );
       this.setState({ trackings: response.data });
     } catch (error) {
@@ -49,7 +49,7 @@ class RastreamentoPacientes extends Component {
       };
       try {
         const response = await axios.post(
-          "https://backend-hospital-system.onrender.com/api/trackings",
+          " https://backend-hospital-system-61pw.onrender.com/api/trackings",
           newTracking
         );
         this.setState({
@@ -67,7 +67,7 @@ class RastreamentoPacientes extends Component {
     const { trackings } = this.state;
     try {
       await axios.patch(
-        `https://backend-hospital-system.onrender.com/api/trackings/${id}`,
+        ` https://backend-hospital-system-61pw.onrender.com/api/trackings/${id}`,
         {
           status: newStatus,
         }

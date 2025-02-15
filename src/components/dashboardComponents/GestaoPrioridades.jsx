@@ -28,11 +28,10 @@ class GestaoPrioridades extends Component {
   componentDidMount() {
     this.fetchPatients();
   }
-
   fetchPatients = async () => {
     try {
       const response = await axios.get(
-        "https://backend-hospital-system.onrender.com/api/patients"
+        " https://backend-hospital-system-61pw.onrender.com/api/patients"
       );
       if (Array.isArray(response.data)) {
         this.setState({ patients: response.data });
@@ -47,7 +46,7 @@ class GestaoPrioridades extends Component {
   handleChangePriority = async (id, newPriority) => {
     try {
       await axios.patch(
-        `https://backend-hospital-system.onrender.com/api/patients/${id}`,
+        ` https://backend-hospital-system-61pw.onrender.com/api/patients/${id}`,
         {
           priority: newPriority,
         }
@@ -67,7 +66,7 @@ class GestaoPrioridades extends Component {
       };
       try {
         await axios.post(
-          "https://backend-hospital-system.onrender.com/api/patients",
+          " https://backend-hospital-system-61pw.onrender.com/api/patients",
           newPatient
         );
         this.setState({ newPatientName: "", newPatientPriority: "Baixa" });
@@ -81,7 +80,7 @@ class GestaoPrioridades extends Component {
   removePatient = async (id) => {
     try {
       await axios.delete(
-        `https://backend-hospital-system.onrender.com/api/patients/${id}`
+        ` https://backend-hospital-system-61pw.onrender.com/api/patients/${id}`
       );
       this.fetchPatients();
     } catch (error) {

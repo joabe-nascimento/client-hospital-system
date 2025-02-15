@@ -33,7 +33,7 @@ const AgendamentoTransporte = () => {
   const fetchRequests = async () => {
     try {
       const response = await axios.get(
-        "https://backend-hospital-system.onrender.com/api/requests"
+        "https://backend-hospital-system-61pw.onrender.com/api/requests"
       );
       if (Array.isArray(response.data)) {
         setRequests(response.data);
@@ -50,7 +50,7 @@ const AgendamentoTransporte = () => {
   const handleAccept = async (id) => {
     try {
       await axios.patch(
-        `https://backend-hospital-system.onrender.com/api/requests/${id}`,
+        `https://backend-hospital-system-61pw.onrender.com/api/requests/${id}`,
         {
           status: "Aceita",
         }
@@ -64,7 +64,7 @@ const AgendamentoTransporte = () => {
   const handleReject = async (id) => {
     try {
       await axios.patch(
-        `https://backend-hospital-system.onrender.com/api/requests/${id}`,
+        `https://backend-hospital-system-61pw.onrender.com/api/requests/${id}`,
         {
           status: "Recusada",
         }
@@ -79,7 +79,7 @@ const AgendamentoTransporte = () => {
     if (newPatient.trim() !== "") {
       try {
         await axios.post(
-          "https://backend-hospital-system.onrender.com/api/requests",
+          "https://backend-hospital-system-61pw.onrender.com/api/requests",
           {
             patient: newPatient,
           }

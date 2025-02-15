@@ -34,7 +34,7 @@ class RegistroIncidentes extends Component {
   fetchIncidents = async () => {
     try {
       const response = await axios.get(
-        "https://backend-hospital-system.onrender.com/api/incidents"
+        " https://backend-hospital-system-61pw.onrender.com/api/incidents"
       );
       this.setState({ incidents: response.data });
     } catch (error) {
@@ -47,7 +47,7 @@ class RegistroIncidentes extends Component {
     if (newIncident.trim() !== "" && registeredBy.trim() !== "") {
       try {
         const response = await axios.post(
-          "https://backend-hospital-system.onrender.com/api/incidents",
+          " https://backend-hospital-system-61pw.onrender.com/api/incidents",
           {
             description: newIncident,
             registeredBy,
@@ -68,7 +68,7 @@ class RegistroIncidentes extends Component {
     const { incidents } = this.state;
     try {
       await axios.delete(
-        `https://backend-hospital-system.onrender.com/api/incidents/${id}`
+        ` https://backend-hospital-system-61pw.onrender.com/api/incidents/${id}`
       );
       this.setState({
         incidents: incidents.filter((incident) => incident._id !== id),

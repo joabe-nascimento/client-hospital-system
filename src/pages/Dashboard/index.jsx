@@ -14,8 +14,10 @@ import {
   useDisclosure,
   Flex,
   useToast,
+  Avatar,
+  Icon,
 } from "@chakra-ui/react";
-import { MdMenu } from "react-icons/md";
+import { MdMenu, MdPerson } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +40,7 @@ const Dashboard = () => {
 
   const headingSize = useBreakpointValue({ base: "md", md: "lg" });
   const subheadingSize = useBreakpointValue({ base: "sm", md: "md" });
-  const textSize = useBreakpointValue({ base: "sm", md: "md" });
+  const textSize = useBreakpointValue({ base: "xs", md: "sm" });
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -143,7 +145,7 @@ const Dashboard = () => {
 
       <MotionBox
         ml={{ base: 0, md: "250px" }}
-        p={6}
+        p={10}
         w="full"
         h="full"
         overflowY="auto"
@@ -151,14 +153,23 @@ const Dashboard = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Flex justify="space-between" align="center" color="WhiteText">
-          <Heading as="h1" size={headingSize} mb={4} fontWeight="800">
+        <Flex justify="space-between" align="center" mb={4}>
+          <Heading as="h1" size={headingSize} fontWeight="800" color="teal.500">
             Hospital Geral Cleriston Andrade
           </Heading>
           {user && (
-            <Text fontSize={subheadingSize} fontWeight="600">
-              Bem-vindo, {user.name}
-            </Text>
+            <Flex align="center">
+              <Avatar
+                size="sm"
+                icon={<Icon as={MdPerson} />}
+                bg="teal.500"
+                color="white"
+                mr={2}
+              />
+              <Text fontSize={subheadingSize} fontWeight="600">
+                Bem-vindo, {user.name}
+              </Text>
+            </Flex>
           )}
         </Flex>
         <Divider mb={4} />
@@ -167,7 +178,7 @@ const Dashboard = () => {
           size={subheadingSize}
           mb={4}
           fontWeight="400"
-          color="GrayText"
+          color="gray.500"
         >
           Funcionalidades Principais
         </Heading>

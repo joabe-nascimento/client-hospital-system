@@ -40,19 +40,29 @@ const SidebarContent = ({
     "0 4px 6px rgba(0, 0, 0, 0.1)",
     "0 4px 6px rgba(0, 0, 0, 0.3)"
   );
-  const sidebarBg = useColorModeValue("white", "gray.800");
+  const sidebarBg = useColorModeValue(
+    "linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%)",
+    "linear-gradient(180deg, #1a202c 0%, #2d3748 100%)"
+  );
 
   const MotionIcon = motion(Icon);
 
   return (
-    <Box p={4} bg={sidebarBg} height="100vh" position="relative">
-      <VStack spacing={4} align="stretch">
+    <Box
+      p={4}
+      bg={sidebarBg}
+      height="100vh"
+      position="relative"
+      boxShadow="2xl"
+    >
+      <VStack spacing={6} align="stretch">
         <Center>
           <Heading
             as="h2"
             fontSize="4xl"
             fontFamily="Poppins, sans-serif"
             mb={4}
+            color={useColorModeValue("teal.500", "teal.200")}
           >
             Prosel
           </Heading>
@@ -75,7 +85,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: btnActiveBg, transform: "translateY(0)" }}
-          transition="all 0.5s"
+          transition="all 0.3s ease-in-out"
         >
           Agendamento
         </Button>
@@ -97,7 +107,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: btnActiveBg, transform: "translateY(0)" }}
-          transition="all 0.2s"
+          transition="all 0.3s ease-in-out"
         >
           Rastreamento
         </Button>
@@ -119,7 +129,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: btnActiveBg, transform: "translateY(0)" }}
-          transition="all 0.2s"
+          transition="all 0.3s ease-in-out"
         >
           Gestão de Prioridades
         </Button>
@@ -141,7 +151,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: btnActiveBg, transform: "translateY(0)" }}
-          transition="all 0.2s"
+          transition="all 0.3s ease-in-out"
         >
           Registro de Incidentes
         </Button>
@@ -162,7 +172,7 @@ const SidebarContent = ({
             svg: { color: "white" },
           }}
           _active={{ bg: "red.700", transform: "translateY(0)" }}
-          transition="all 0.2s"
+          transition="all 0.3s ease-in-out"
         >
           Logout
         </Button>
